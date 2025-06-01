@@ -42,15 +42,16 @@ export const _allSpecDatas = (allDatasObj) => {
   //-------------------默认定制-------------------
   //-------------------人工定制有备注-------------------
   //定制里，但是没写订单备注和客人备注定制姓名号码的，统一为定制没备注
-  // 定制没备注？？？
+  // ---定制有备注---
   const { examineHasNoRemarkCodes } = _examine_hasRemark({
     orderDataSource: _DATA_OBJ.orderDataSource,
   });
+  // --缺少定制信息
   const _examineDataSourceHasNoRemark = getSpecData({
     codeArrs: examineHasNoRemarkCodes,
     _DATA_OBJ,
   });
-    // 改了，定制全都人工审核一遍
+     // ---定制
   const _examineDataSource = _DATA_OBJ.orderDataSource;
 
   const obj = {
