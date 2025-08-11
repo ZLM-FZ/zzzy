@@ -51,7 +51,9 @@ export default {
     login(bol) {
       this.islock = bol;
     },
-    handleClick() {},
+    handleClick(val) {
+      this.$message.success("已切换版本");
+    },
   },
 };
 </script>
