@@ -5,6 +5,9 @@
       <el-tab-pane label="店小秘" name="first">
         <Sys4Home />
       </el-tab-pane>
+      <el-tab-pane label="新版捡号v5" name="first0">
+        <Sys5Home />
+      </el-tab-pane>
       <!-- <el-tab-pane label="独立站店小秘" name="first">
         <Sys3Home />
       </el-tab-pane> -->
@@ -25,6 +28,7 @@ import Lock from "./Lock.vue";
 import Sys2Home from "./sys2/home.vue";
 import Sys3Home from "./sys3/home.vue";
 import Sys4Home from "./sys4/home.vue";
+import Sys5Home from "./sys5/home.vue";
 
 export default {
   name: "Home",
@@ -33,7 +37,8 @@ export default {
     Lock,
     // Sys2Home,
     // Sys3Home,
-    Sys4Home
+    Sys4Home,
+    Sys5Home
   },
   mounted() {},
   data: () => {
