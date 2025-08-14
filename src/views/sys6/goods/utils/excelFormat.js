@@ -13,9 +13,6 @@ export const imgTable = ({ img, specStr, productName }) => {
     <tr align="center">
         <td width="200">${specStr}</td>
     </tr>    
-     <tr align="center">
-        <td width="200">${productName}</td>
-    </tr>     
 </table>`;
 };
 
@@ -23,9 +20,6 @@ export const imgTable = ({ img, specStr, productName }) => {
 export const imgEmptyLeftTable = `<table  align="center" >
 <tr align="center" valign="center">
     <td > </td>
-</tr>
-<tr align="center">
-    <td ></td>
 </tr>
 <tr align="center">
     <td ></td>
