@@ -1,3 +1,6 @@
+import { getDay } from "./main.js";
+const date = getDay();
+
 export const jianhaoExcelInit = (arr) => {
   if(!arr.length)return
   let trStrs = '';
@@ -14,8 +17,8 @@ export const jianhaoExcelInit = (arr) => {
  const jianhaoExcelTableStart = () => {
   return `<table align="left" border="1" style="color: black;">  
         <tr align="left" bgcolor="#feff41" style="font-weight:bolder;font-size: 16px;">
-            <td width="100" height="36">衬衫</td>
-            <td width="400" height="36">款式</td>
+            <td width="150" height="36">衬衫${date}</td>
+            <td width="300" height="36">款式</td>
             <td width="300" height="36">姓名和号码</td>
             <td width="150" height="36">胸章</td>
             <td width="150" height="36">臂章</td>
@@ -52,9 +55,11 @@ function resetAIfInDz(a) {
   const type = isNumeric(size)?'童装':''
   let name = _instruction?_instruction:spec
   name = resetAIfInDz(name)
+
+  const prodName = simplifyProductName(productName)
   return `<tr align="left">
-          <td  width="100" height="100"><img style="width: 100%;" src="https:${imgUrl}" width="100" height="100" alt=""></td>
-          <td>${productName}</td>
+          <td  width="150" height="150"><img style="width: 100%;" src="https:${imgUrl}" width="150" height="150" alt=""></td>
+          <td>${prodName}</td>
           <td style="font-weight:bolder;color: red;font-size: 18px;">${name}</td>
           <td>${'&nbsp;'}</td>
           <td style="font-weight:bolder;font-size: 18px;">${_customPatch}</td>
@@ -78,6 +83,10 @@ function isNumeric(value) {
   }
   // 其他情况（如 boolean、object、undefined 等）返回 false
   return false;
+}
+
+const simplifyProductName = (str)=>{
+  return str.replace(/Football Shirt?( Kids Size)? 1:1 Thai Quality/g, '').trim();
 }
 
 
