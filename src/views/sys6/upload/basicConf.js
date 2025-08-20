@@ -46,7 +46,7 @@ export const _setColor = () => {
 export const _splitChangPingGuiGe = (str)=> {
     str = str.replaceAll('Other(Add In The Instruction)','With name and number')
     str = str.replaceAll('Custom ltems','Custom Items')
-    const keywords = ['Size', 'Specification', 'CUSTOM PATCH', 'Custom Patch', 'MODEL', 'Custom Items', 'Instruction'];
+    const keywords = ['Size', 'Specification', 'CUSTOM PATCH', 'Custom Patch', 'MODEL', 'Custom Items', 'Instruction', 'Name and Number'];
     const positions = [];
     const resultObj = {};
     // 把关键字转换为驼峰命名
