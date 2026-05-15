@@ -18,6 +18,9 @@
       <download-excel :ref="`download-img`" :class="['export-img img']" :data="imgExport.data || []" :name="imgExport.name">
         <i class="el-icon-download"></i>下载img
       </download-excel>
+      <download-excel :ref="`download-imgV2`" :class="['export-img img']" :data="imgExportV2.data || []" :name="imgExportV2.name">
+        <i class="el-icon-download"></i>下载imgV2
+      </download-excel>
       <!-- <download-excel :ref="`download`" :class="['export-img doOrder']" :data="orderExport.data || []" :name="orderExport.name">
           {{item.label}}
         </download-excel> -->
@@ -50,7 +53,7 @@ import {
   cloneDeep as _cloneDeep,
   findIndex as _findIndex
 } from "lodash";
-import { _exportTabel as _exportImg } from "./utils/imgExport.js";
+import { _exportTabel as _exportImg, _exportTabelV2 as _exportImgV2 } from "./utils/imgExport.js";
 import { jianhaoExcelInit } from './utils/jianhaoExcel.js';
 import { _snTxtStr, getDay } from "./utils/main.js";
 import { _orderTabel as _exportOrder } from "./utils/ordersExport.js";
@@ -96,6 +99,11 @@ export default {
         data: [],
         name: "",
       },
+      imgExportV2: {
+        //报货V2
+        data: [],
+        name: "",
+      },
       orderExport: {
         data: [],
         name: "",
@@ -132,6 +140,7 @@ export default {
       }
       this.timer = getDay();
       this.exportImg(this._EXPORT_DATAS.flatDataSource);
+      this.exportImgV2(this._EXPORT_DATAS.flatDataSource);
       this.exportJianhao();
       this.exportOrders(this._EXPORT_DATAS.doOrdersDataSource);
       this.$message.success("导出成功，快去下载");
@@ -149,6 +158,11 @@ export default {
     exportImg() {
       this.imgExport.data = _exportImg(this._EXPORT_DATAS.flatDataSource); //图片汇总导出
       this.imgExport.name = `${this.fileName || ""}报货-${this.timer}.xlsx`;
+    },
+    //-----------------导出报货V2-----------------
+    exportImgV2() {
+      this.imgExportV2.data = _exportImgV2(this._EXPORT_DATAS.flatDataSource); //图片汇总导出（去域名合并）
+      this.imgExportV2.name = `${this.fileName || ""}报货V2-${this.timer}.xlsx`;
     },
     //-----------------导出捡号-----------------
     exportJianhao() {
@@ -183,6 +197,8 @@ export default {
       this.orderExport.name = "";
       this.imgExport.data = [];
       this.imgExport.name = "";
+      this.imgExportV2.data = [];
+      this.imgExportV2.name = "";
       this.jianhaoExport.data = [];
       this.jianhaoExport.name = "";
       this.curStep = '3'

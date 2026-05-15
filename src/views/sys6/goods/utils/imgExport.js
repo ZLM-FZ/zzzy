@@ -7,6 +7,17 @@ import {
 } from "lodash";
 import { imgEmptyLeftTable, imgTable } from "./excelFormat.js";
 
+//-------------提取图片路径（去掉域名）----------------
+const getImagePath = (url) => {
+  try {
+    // 处理协议相对URL (//example.com/path) -> 补全为绝对URL
+    const absoluteUrl = url.startsWith('//') ? 'https:' + url : url;
+    return new URL(absoluteUrl).pathname;
+  } catch {
+    return url;
+  }
+};
+
 // 转图片格式
 export const _exportTabel = (flatDataSource) => {
   //数据拿图片，整尺寸和数量完毕
@@ -15,6 +26,14 @@ export const _exportTabel = (flatDataSource) => {
   const sortDataSource = _flatten(_sortDataSource(imgDataSource));
   // console.log(sortDataSource, "--sortDataSource");
   //转excel的格式输出
+  const exportData = _setExportTabel(sortDataSource);
+  return exportData;
+};
+
+// 转图片格式 V2（去掉域名后匹配合并）
+export const _exportTabelV2 = (flatDataSource) => {
+  const imgDataSource = _filterLmgDataV2(flatDataSource);
+  const sortDataSource = _flatten(_sortDataSource(imgDataSource));
   const exportData = _setExportTabel(sortDataSource);
   return exportData;
 };
@@ -84,6 +103,39 @@ const _filterLmgData = (arr) => {
       const sp = setSizeNum(size, number);
       const obj = {
         imgUrl: href,
+        sizeNum: [sp],
+        productName,
+      };
+      imgOriginalArr.push(obj);
+    } else {
+      //step1:如果已经存在了,图片不变，尺寸和数量变
+      setAlreadySize(imgOriginalArr[i], { size, number });
+    }
+  });
+
+  return imgOriginalArr;
+};
+
+//-------------尺寸、数量、图片处理 V2（去域名匹配）----------------
+const _filterLmgDataV2 = (arr) => {
+  const imgOriginalArr = []; //图片源数据
+  arr.map((item) => {
+    const productName = item.productName || ''
+    const href = item.imgUrl;
+    const imagePath = getImagePath(href);
+    //step1: 先找这个图片在不在（用路径而非完整URL）
+    const i = _findIndex(imgOriginalArr, (obj) => getImagePath(obj.imgUrl) === imagePath);
+    //step2: 尺寸
+    const size = item.size;
+    //step3: 当前尺寸的
+    const number = item.number;
+
+    //step1：不存在，新加进去
+    if (i === -1) {
+      const sp = setSizeNum(size, number);
+      const obj = {
+        imgUrl: href, // 保留原URL用于展示
+        imagePath, // 记录path用于去重
         sizeNum: [sp],
         productName,
       };
